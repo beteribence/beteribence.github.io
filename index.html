@@ -70,8 +70,8 @@
     display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;border-top:1px solid var(--line);padding-top:22px;
   }
   .toolmarks span{
-    font-size:10.5px;letter-spacing:.06em;color:var(--ink-dim);
-    border:1px solid var(--line);padding:5px 10px;background:var(--bg-raised);
+    font-size:12px;letter-spacing:.05em;color:var(--ink);
+    border:1px solid var(--line);padding:7px 13px;background:var(--bg-raised);transition:border-color .2s;
   }
   .role-tag{
     color:var(--orange);font-size:13px;letter-spacing:.15em;margin-bottom:14px;display:flex;align-items:center;gap:8px;
@@ -122,9 +122,9 @@
     border-top:1px solid var(--line);border-bottom:1px solid var(--line);
     overflow:hidden;white-space:nowrap;background:var(--bg-raised);
   }
-  .ticker{display:inline-flex;padding:12px 0;animation:scroll 32s linear infinite;}
-  .ticker span{font-size:11px;letter-spacing:.08em;color:var(--ink-dim);padding:0 28px;position:relative;}
-  .ticker span::after{content:'●';position:absolute;right:-3px;color:var(--orange-dim);font-size:6px;top:6px;}
+  .ticker{display:inline-flex;padding:12px 0;animation:scroll 70s linear infinite;}
+  .ticker span{font-size:11.5px;letter-spacing:.08em;color:var(--ink-dim);padding:0 32px;position:relative;}
+  .ticker span::after{content:'●';position:absolute;right:-4px;color:var(--orange);font-size:9px;top:3px;}
   @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   @media (prefers-reduced-motion: reduce){ .ticker{animation:none;} .dot{animation:none;} }
 
@@ -160,12 +160,12 @@
     position:relative;padding:18px 16px 18px 0;display:flex;flex-direction:column;gap:7px;
     border-top:2px solid var(--line);
   }
-  .step:nth-child(-n+3){border-top-color:var(--orange);}
+  .step:nth-child(-n+2){border-top-color:var(--orange);}
   .step::before{
     content:'';position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;
     background:var(--bg-raised);border:2px solid var(--line);
   }
-  .step:nth-child(-n+3)::before{border-color:var(--orange);background:var(--orange);}
+  .step:nth-child(-n+2)::before{border-color:var(--orange);background:var(--orange);}
   .step .sn{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);}
   .step .st{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25;}
   .step .sd{font-size:11.5px;color:var(--ink-faint);line-height:1.5;}
@@ -176,13 +176,18 @@
   .preport:hover{border-color:var(--orange);}
 
   /* ---------- WHY MOTORSPORT ---------- */
-  .whygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
-  .wcard{background:var(--bg);padding:30px;display:flex;flex-direction:column;gap:16px;min-height:260px;}
-  .wcard .tag{font-size:11px;letter-spacing:.1em;color:var(--ink-faint);display:flex;justify-content:space-between;}
-  .wcard h3{font-family:'Tenorite','Poppins',sans-serif;font-weight:700;font-size:24px;}
-  .wcard p{color:var(--ink-dim);font-size:14.5px;line-height:1.6;}
-  .edit-flag{margin-top:auto;font-size:11px;color:var(--orange);letter-spacing:.05em;}
-  @media (max-width:900px){ .whygrid{grid-template-columns:1fr;} }
+  .why-lead{color:var(--ink-dim);font-size:17px;line-height:1.7;max-width:62ch;margin-top:-18px;}
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:46px;}
+  .shot{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--bg-raised);}
+  .shot img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    filter:grayscale(1) contrast(1.05) brightness(.72);transform:scale(1.02);
+    transition:filter .55s ease, transform .55s ease;
+  }
+  .shot:hover img{filter:grayscale(0) contrast(1) brightness(.95);transform:scale(1.06);}
+  .stripfoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:14px;font-size:10.5px;letter-spacing:.08em;color:var(--ink-faint);}
+  @media (max-width:900px){ .strip{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:520px){ .strip{grid-template-columns:1fr;} }
 
   /* ---------- TIMELINE ---------- */
   .tl{border-top:1px solid var(--line);}
@@ -199,26 +204,20 @@
   /* ---------- CONTACT ---------- */
   .contact-top h2{font-size:clamp(30px,5vw,54px);font-weight:800;line-height:1.05;}
   .contact-top p{color:var(--ink-dim);max-width:52ch;margin-top:18px;font-size:16px;line-height:1.6;}
-  .contact-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:56px;}
-  .cinfo{padding:40px 40px 40px 0;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:26px;}
-  .citem .k{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:4px;}
+  .contact-grid{display:grid;grid-template-columns:300px 1fr;gap:48px;border-top:1px solid var(--line);margin-top:56px;padding-top:44px;align-items:start;}
+  .cportrait{position:relative;aspect-ratio:4/5;border:1px solid var(--line);background:var(--bg-raised);overflow:visible;}
+  .cportrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .portrait-ph{
+    display:none;position:absolute;inset:0;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;color:var(--ink-faint);font-size:26px;gap:12px;padding:20px;
+  }
+  .portrait-ph span{font-size:10px;line-height:1.7;letter-spacing:.05em;max-width:26ch;}
+  .cinfo{display:flex;flex-direction:column;gap:26px;padding-top:4px;}
+  .citem .k{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:5px;}
   .citem .v{font-size:16px;color:var(--ink);}
   .citem .v a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink-faint);}
   .citem .v a:hover{color:var(--orange);border-color:var(--orange);}
-  .cform{padding:40px 0 40px 40px;display:flex;flex-direction:column;gap:16px;}
-  .cform label{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);}
-  .cform input, .cform textarea{
-    background:transparent;border:1px solid var(--line);color:var(--ink);
-    font-family:'Tenorite','Poppins',sans-serif;font-size:14px;padding:12px 14px;width:100%;
-  }
-  .cform textarea{resize:vertical;min-height:110px;}
-  .cform button{
-    margin-top:8px;background:var(--orange);color:#08090b;border:none;
-    font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.1em;font-size:13px;
-    padding:16px 20px;cursor:pointer;transition:background .2s;text-align:left;
-  }
-  .cform button:hover{background:var(--amber);}
-  @media (max-width:800px){ .contact-grid{grid-template-columns:1fr;} .cinfo{border-right:none;border-bottom:1px solid var(--line);padding:40px 0;} .cform{padding:40px 0;} }
+  @media (max-width:800px){ .contact-grid{grid-template-columns:1fr;gap:32px;} .cportrait{max-width:260px;} }
 
   footer{border-top:1px solid var(--line);padding:36px 32px;max-width:1400px;margin:0 auto;}
   .fgrid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
@@ -240,7 +239,7 @@
     <nav>
       <a href="#hero" class="active">00 LAUNCH CONTROL</a>
       <a href="#projects">01 PROJECT PADDOCK</a>
-      <a href="#why">02 WHY MOTORSPORT</a>
+      <a href="#why">02 TRACKSIDE</a>
       <a href="#timeline">03 KNOWLEDGE INTAKE</a>
       <a href="#contact">04 CONTACT</a>
     </nav>
@@ -330,7 +329,7 @@
       <div class="ptitle display">MBT / MBTL determination</div>
       <p class="pdesc">Analysed test bench cylinder pressure data with a combustion analyser to determine MBT and knock-limited spark advance across a range of air-fuel ratios, recommending optimal operating points for endurance and drag racing.</p>
       <div class="pfoot">
-        <span class="ptools mono">BDN COMBUSTION ANALYSER / MATLAB</span>
+        <span class="ptools mono">BDN COMBUSTION ANALYSER</span>
         <a class="preport mono" href="projects/P04-mbt-mbtl-determination.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
       </div>
     </div>
@@ -356,18 +355,20 @@
     </div>
 
     <div class="pcard">
-      <div class="ptop"><span>P-07 // GT3 // MSC THESIS</span><span class="status wip mono">IN PROGRESS</span></div>
+      <div class="ptop"><span>P-07 // BOP CHECKER</span><span class="status wip mono">IN PROGRESS</span></div>
       <div class="ptitle display">BMW M4 GT3 BOP checker</div>
       <p class="pdesc">MATLAB-based Balance of Performance compliance checker processing MoTeC telemetry — currently in development.</p>
-      <div class="ptools mono">MATLAB / MOTEC i2</div>
+      <div class="pfoot">
+        <span class="ptools mono">MATLAB / MOTEC i2</span>
+      </div>
     </div>
 
   </div>
 
   <div class="thesis">
-    <div class="ptop"><span class="mono">P-08 // RADICAL XXR // MSC THESIS</span><span class="status wip mono">IN PROGRESS</span></div>
-    <h3 class="thesis-title display">Turbocharger mapping &amp; engine model — Radical XXR</h3>
-    <p class="thesis-lead">Manufacturer turbo maps for this engine either don't exist or don't cover the range the car actually runs in — so I'm measuring the turbocharger myself on the university test bench and building the maps into a validated Cruise M model that can support real calibration decisions without burning track time.</p>
+    <div class="ptop"><span class="mono">P-08 // MSC THESIS</span><span class="status wip mono">IN PROGRESS</span></div>
+    <h3 class="thesis-title display">Turbo mapping, engine simulation and calibration — Radical XXR</h3>
+    <p class="thesis-lead">One of my biggest and most complex projects. The goal is to improve engine performance on track through simulation and calibration — and to get there, the turbocharger has to be mapped and parametrised properly, so the model is built on measured data rather than assumptions.</p>
     <div class="flow">
       <div class="step"><span class="sn mono">01</span><span class="st">Baseline simulation</span><span class="sd">AVL Cruise M model built from known engine geometry</span></div>
       <div class="step"><span class="sn mono">02</span><span class="st">Turbo test bench</span><span class="sd">Compressor &amp; turbine measured at SZE</span></div>
@@ -381,27 +382,27 @@
 </section>
 
 <section id="why">
-  <div class="sec-eyebrow mono">02 // TELEMETRY VIEW</div>
-  <h2 class="sec-title display">Why I'm the engineer<br>for the job</h2>
-  <div class="whygrid">
-    <div class="wcard">
-      <div class="tag mono"><span>W-01</span><span>MOTIVATION</span></div>
-      <h3 class="display">The pull</h3>
-      <p>Internal combustion is where I want to build my career — the way a spark advance sweep or an AFR change ripples through everything downstream. Telemetry and track data are what make it real: numbers off an actual engine, on an actual track, not just a spreadsheet.</p>
-      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
-    </div>
-    <div class="wcard">
-      <div class="tag mono"><span>W-02</span><span>METHOD</span></div>
-      <h3 class="display">How I work</h3>
-      <p>Every model starts on the test bench. I validate simulation against dyno data, cross-check combustion analysis against cylinder pressure traces, and use telemetry to close the loop between what the engine should do and what it actually does on track.</p>
-      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
-    </div>
-    <div class="wcard">
-      <div class="tag mono"><span>W-03</span><span>OBJECTIVE</span></div>
-      <h3 class="display">What I bring</h3>
-      <p>A background built around engines — test-bench execution, combustion analysis, calibration — paired with the telemetry and data skills to take that knowledge trackside, on a GT3 or endurance programme.</p>
-      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
-    </div>
+  <div class="sec-eyebrow mono">02 // TRACKSIDE</div>
+  <h2 class="sec-title display">Why motorsport</h2>
+  <p class="why-lead">I'm a competitive person, and motorsport has been my passion for years long before it was a career plan. One of my earliest memories of the sport is Felipe Massa at Interlagos in 2008, winning the race and losing the championship by a point in the final corner — the first time a sporting event made me cry. That feeling never really went away, and now it's the industry I want to spend my working life in.</p>
+
+  <div class="strip">
+    <figure class="shot">
+      <img src="photos/01.jpg" alt="Hypercar at Spa-Francorchamps" loading="lazy">
+    </figure>
+    <figure class="shot">
+      <img src="photos/02.jpg" alt="Ferrari 499P at Spa-Francorchamps" loading="lazy">
+    </figure>
+    <figure class="shot">
+      <img src="photos/03.jpg" alt="LMGT3 and Hypercar traffic at Spa-Francorchamps" loading="lazy">
+    </figure>
+    <figure class="shot">
+      <img src="photos/04.jpg" alt="Grandstand view of the pit straight at Spa-Francorchamps" loading="lazy">
+    </figure>
+  </div>
+  <div class="stripfoot mono">
+    <span>2026 WEC 6 HOURS OF SPA-FRANCORCHAMPS — FROM MY PERSPECTIVE</span>
+    <span>HOVER FOR COLOUR</span>
   </div>
 </section>
 
@@ -410,7 +411,7 @@
   <h2 class="sec-title display">Timeline</h2>
   <div class="tl">
     <div class="tlrow active">
-      <div class="when mono">2026 —<br>PRESENT</div>
+      <div class="when mono">FEB 2026 —<br>PRESENT</div>
       <div class="node"><i></i></div>
       <div>
         <h3 class="display">ECU Calibration &amp; Data Analysis Intern</h3>
@@ -418,31 +419,31 @@
         <p>Working on data acquisition and calibration for Radical race cars, alongside the MSc thesis project on turbo mapping for the Radical XXR.</p>
       </div>
     </div>
-    <div class="tlrow">
-      <div class="when mono">2024 —<br>2026</div>
+    <div class="tlrow active">
+      <div class="when mono">FEB 2026 —<br>PRESENT</div>
       <div class="node"><i></i></div>
       <div>
         <h3 class="display">MSc, Motorsport Engineering</h3>
         <div class="role mono">SZÉCHENYI ISTVÁN UNIVERSITY, GYŐR</div>
-        <p>Coursework and projects spanning vehicle dynamics, engine simulation, combustion analysis, and race strategy — including the BMW M4 GT3 BOP compliance checker.</p>
+        <p>Specialising in engine simulation, combustion analysis, telemetry analysis, and race strategy — the ground the projects above are built on.</p>
       </div>
     </div>
     <div class="tlrow">
-      <div class="when mono">—</div>
+      <div class="when mono">NOV 2023 —<br>FEB 2026</div>
       <div class="node"><i></i></div>
       <div>
         <h3 class="display">Verification &amp; Validation Engineer</h3>
         <div class="role mono">AVL HUNGARY</div>
-        <p>ICE test-bench execution using AVL PUMA and AVL CONCERTO.</p>
+        <p>Joined as an intern alongside my BSc and moved into a full engineer role. Planned and executed internal combustion engine test runs on the bench, then analysed the results to assess engine performance.</p>
       </div>
     </div>
     <div class="tlrow">
-      <div class="when mono">— 2024</div>
+      <div class="when mono">SEP 2021 —<br>FEB 2025</div>
       <div class="node"><i></i></div>
       <div>
         <h3 class="display">BSc, Vehicle Engineering</h3>
         <div class="role mono">SZÉCHENYI ISTVÁN UNIVERSITY, GYŐR</div>
-        <p>Foundation in vehicle systems ahead of specialising in motorsport engineering.</p>
+        <p>Specialised in internal combustion engine development. My thesis covered converting an experimental ICE to hydrogen operation.</p>
       </div>
     </div>
   </div>
@@ -452,13 +453,26 @@
   <div class="contact-top">
     <div class="sec-eyebrow mono">04 // CONTACT</div>
     <h2 class="display">Ready for<br>green flag</h2>
-    <p>Open to full-time roles and internships in motorsport data, calibration, and simulation — GT3 and endurance programmes especially. Let's talk.</p>
+    <p>Open to full-time roles and internships, trackside or at the factory, across data, simulation and performance engineering — GT3 or prototype, endurance or sprint.</p>
   </div>
   <div class="contact-grid">
+    <div class="cportrait">
+      <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+      <img src="portrait.jpg" alt="Bence Bétéri" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <div class="portrait-ph mono">◻<br><span>save a photo of yourself as "portrait.jpg" next to index.html</span></div>
+    </div>
     <div class="cinfo">
       <div class="citem">
         <div class="k mono">EMAIL</div>
-        <div class="v"><a href="mailto:your.email@example.com">your.email@example.com</a></div>
+        <div class="v"><a href="mailto:beteri.bence02@gmail.com">beteri.bence02@gmail.com</a></div>
+      </div>
+      <div class="citem">
+        <div class="k mono">PHONE</div>
+        <div class="v"><a href="tel:+36303405235">+36 30 340 5235</a></div>
+      </div>
+      <div class="citem">
+        <div class="k mono">LINKEDIN</div>
+        <div class="v"><a href="https://www.linkedin.com/in/b%C3%A9t%C3%A9ri-bence" target="_blank" rel="noopener">linkedin.com/in/bétéri-bence</a></div>
       </div>
       <div class="citem">
         <div class="k mono">BASED</div>
@@ -469,21 +483,6 @@
         <div class="v" style="color:var(--amber)">● Open to opportunities</div>
       </div>
     </div>
-    <form class="cform">
-      <div>
-        <label class="mono">NAME</label>
-        <input type="text" placeholder="Team Principal">
-      </div>
-      <div>
-        <label class="mono">EMAIL</label>
-        <input type="email" placeholder="team@motorsport.com">
-      </div>
-      <div>
-        <label class="mono">MESSAGE</label>
-        <textarea placeholder="Describe the role or project..."></textarea>
-      </div>
-      <button type="submit" class="mono">TRANSMIT MESSAGE →</button>
-    </form>
   </div>
 </section>
 
@@ -496,7 +495,7 @@
     <div class="flinks mono">
       <a href="#hero">LAUNCH</a>
       <a href="#projects">PROJECTS</a>
-      <a href="#why">MOTIVATION</a>
+      <a href="#why">TRACKSIDE</a>
       <a href="#timeline">TIMELINE</a>
       <a href="#contact">CONTACT</a>
     </div>
