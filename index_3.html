@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bence Bétéri — Motorsport Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#08090b;
+    --bg-raised:#111318;
+    --line:#22262e;
+    --ink:#e9e8e4;
+    --ink-dim:#8b929c;
+    --ink-faint:#565d67;
+    --orange:#e10600;
+    --orange-dim:#5c0300;
+    --amber:#ff3b30;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Tenorite','Poppins',sans-serif;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--orange);color:#08090b;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Tenorite','Poppins',sans-serif;text-transform:uppercase;}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--orange); outline-offset:2px;
+  }
+
+  /* ---------- TOP BAR ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(8,9,11,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .topline{height:2px;background:linear-gradient(90deg,var(--orange),var(--orange-dim) 40%,transparent 41%);}
+  .navwrap{
+    max-width:1400px;margin:0 auto;padding:16px 32px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;
+  }
+  .sysstat{
+    font-size:11px;letter-spacing:.12em;color:var(--ink-dim);display:flex;align-items:center;gap:8px;white-space:nowrap;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange);animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  nav{display:flex;gap:28px;flex-wrap:wrap;justify-content:center;}
+  nav a{
+    color:var(--ink-dim);text-decoration:none;font-size:11px;letter-spacing:.1em;
+    padding:6px 2px;border-bottom:2px solid transparent;transition:color .2s, border-color .2s;
+  }
+  nav a:hover, nav a.active{color:var(--ink);border-color:var(--orange);}
+  .loc{font-size:11px;letter-spacing:.1em;color:var(--ink-faint);white-space:nowrap;}
+  @media (max-width:900px){ nav{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:1400px;margin:0 auto;padding:64px 32px 40px;
+    display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center;
+  }
+  .toolmarks{
+    display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;border-top:1px solid var(--line);padding-top:22px;
+  }
+  .toolmarks span{
+    font-size:10.5px;letter-spacing:.06em;color:var(--ink-dim);
+    border:1px solid var(--line);padding:5px 10px;background:var(--bg-raised);
+  }
+  .role-tag{
+    color:var(--orange);font-size:13px;letter-spacing:.15em;margin-bottom:14px;display:flex;align-items:center;gap:8px;
+  }
+  .role-tag::before{content:'▸';}
+  h1.name{
+    font-size:clamp(42px,6.5vw,88px);line-height:1;font-weight:800;letter-spacing:-.02em;
+  }
+  h1.name .grey{color:var(--ink-faint);}
+  .bio{
+    color:var(--ink-dim);font-size:16px;line-height:1.6;max-width:44ch;margin-top:26px;
+  }
+
+  .hero-art{
+    position:relative;aspect-ratio:16/9;border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 70% 30%, rgba(225,6,0,.08), transparent 55%),
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(255,255,255,.028) 28px),
+      repeating-linear-gradient(90deg, transparent, transparent 27px, rgba(255,255,255,.028) 28px),
+      var(--bg-raised);
+  }
+  .hero-art .badge{
+    position:absolute;font-size:10px;letter-spacing:.12em;color:var(--ink-dim);z-index:3;pointer-events:none;
+  }
+  .hero-art .badge.bottom{bottom:-26px;left:0;}
+  .hero-art .badge.top-r{right:0;top:-26px;color:var(--orange);animation:pulse 2s infinite;}
+  .yt-wrap, .yt-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0;}
+  .video-placeholder{
+    display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    position:absolute;inset:0;text-align:center;color:var(--ink-faint);z-index:1;
+  }
+  .video-placeholder .play-ring{
+    width:64px;height:64px;border:2px solid var(--orange);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--orange);font-size:20px;padding-left:5px;
+  }
+  .video-placeholder p{font-size:11px;letter-spacing:.06em;line-height:1.8;}
+  .video-placeholder p span{color:var(--ink-faint);font-size:10px;display:block;margin-top:4px;max-width:38ch;}
+  .corner{position:absolute;width:22px;height:22px;z-index:2;pointer-events:none;}
+  .corner::before,.corner::after{content:'';position:absolute;background:var(--orange);}
+  .c-tl{top:-6px;left:-6px;} .c-tr{top:-6px;right:-6px;} .c-bl{bottom:-6px;left:-6px;} .c-br{bottom:-6px;right:-6px;}
+  .corner::before{width:100%;height:2px;top:0;}
+  .corner::after{width:2px;height:100%;left:0;}
+  .c-tr::before{left:auto;right:0;} .c-tr::after{left:auto;right:0;}
+  .c-bl::before{top:auto;bottom:0;} .c-br::before{top:auto;bottom:0;} .c-br::after{left:auto;right:0;}
+
+  /* ---------- TICKER ---------- */
+  .ticker-outer{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    overflow:hidden;white-space:nowrap;background:var(--bg-raised);
+  }
+  .ticker{display:inline-flex;padding:12px 0;animation:scroll 32s linear infinite;}
+  .ticker span{font-size:11px;letter-spacing:.08em;color:var(--ink-dim);padding:0 28px;position:relative;}
+  .ticker span::after{content:'●';position:absolute;right:-3px;color:var(--orange-dim);font-size:6px;top:6px;}
+  @keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  @media (prefers-reduced-motion: reduce){ .ticker{animation:none;} .dot{animation:none;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{max-width:1400px;margin:0 auto;padding:96px 32px;}
+  .sec-eyebrow{color:var(--orange);font-size:12px;letter-spacing:.15em;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .sec-eyebrow::before{content:'▸';}
+  h2.sec-title{font-size:clamp(30px,4.2vw,46px);font-weight:800;line-height:1.05;margin-bottom:40px;}
+
+  /* ---------- PROJECTS ---------- */
+  .projgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);}
+  .pcard{background:var(--bg);padding:26px;display:flex;flex-direction:column;gap:14px;transition:background .2s;}
+  .pcard:hover{background:var(--bg-raised);}
+  .ptop{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.08em;color:var(--ink-faint);}
+  .status{padding:3px 9px;border:1px solid var(--line);font-size:10px;letter-spacing:.1em;display:inline-flex;align-items:center;gap:6px;}
+  .status::before{content:'';width:6px;height:6px;border-radius:50%;}
+  .status.done{color:#5fbf6a;border-color:rgba(95,191,106,.35);background:rgba(95,191,106,.07);}
+  .status.done::before{background:#5fbf6a;}
+  .status.wip{color:var(--orange);border-color:rgba(225,6,0,.45);background:rgba(225,6,0,.09);}
+  .status.wip::before{background:var(--orange);box-shadow:0 0 7px var(--orange);animation:pulse 1.6s infinite;}
+  .sec-intro{color:var(--ink-dim);font-size:15.5px;line-height:1.65;max-width:66ch;margin:-24px 0 36px;}
+  .ptitle{font-family:'Tenorite','Poppins',sans-serif;font-weight:700;font-size:22px;letter-spacing:.01em;line-height:1.1;}
+  .pdesc{color:var(--ink-dim);font-size:14px;line-height:1.55;}
+  .pfoot{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;}
+
+  /* ---------- THESIS WORKFLOW ---------- */
+  .thesis{border:1px solid var(--line);border-top:none;padding:34px 30px;background:var(--bg-raised);}
+  .thesis .ptop{margin-bottom:14px;}
+  .thesis-title{font-size:clamp(22px,2.6vw,32px);font-weight:800;line-height:1.15;margin-bottom:16px;}
+  .thesis-lead{color:var(--ink-dim);font-size:15px;line-height:1.65;max-width:88ch;margin-bottom:34px;}
+  .flow{display:grid;grid-template-columns:repeat(7,1fr);gap:0;}
+  .step{
+    position:relative;padding:18px 16px 18px 0;display:flex;flex-direction:column;gap:7px;
+    border-top:2px solid var(--line);
+  }
+  .step:nth-child(-n+3){border-top-color:var(--orange);}
+  .step::before{
+    content:'';position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;
+    background:var(--bg-raised);border:2px solid var(--line);
+  }
+  .step:nth-child(-n+3)::before{border-color:var(--orange);background:var(--orange);}
+  .step .sn{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);}
+  .step .st{font-size:14px;font-weight:600;color:var(--ink);line-height:1.25;}
+  .step .sd{font-size:11.5px;color:var(--ink-faint);line-height:1.5;}
+  @media (max-width:1100px){ .flow{grid-template-columns:repeat(4,1fr);} }
+  @media (max-width:700px){ .flow{grid-template-columns:repeat(2,1fr);} .thesis{padding:26px 20px;} }
+  .ptools{font-size:10.5px;letter-spacing:.06em;color:var(--ink-faint);}
+  .preport{font-size:10.5px;letter-spacing:.08em;color:var(--orange);text-decoration:none;white-space:nowrap;border-bottom:1px solid transparent;}
+  .preport:hover{border-color:var(--orange);}
+
+  /* ---------- WHY MOTORSPORT ---------- */
+  .whygrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .wcard{background:var(--bg);padding:30px;display:flex;flex-direction:column;gap:16px;min-height:260px;}
+  .wcard .tag{font-size:11px;letter-spacing:.1em;color:var(--ink-faint);display:flex;justify-content:space-between;}
+  .wcard h3{font-family:'Tenorite','Poppins',sans-serif;font-weight:700;font-size:24px;}
+  .wcard p{color:var(--ink-dim);font-size:14.5px;line-height:1.6;}
+  .edit-flag{margin-top:auto;font-size:11px;color:var(--orange);letter-spacing:.05em;}
+  @media (max-width:900px){ .whygrid{grid-template-columns:1fr;} }
+
+  /* ---------- TIMELINE ---------- */
+  .tl{border-top:1px solid var(--line);}
+  .tlrow{display:grid;grid-template-columns:130px 24px 1fr;gap:0 22px;padding:28px 0;border-bottom:1px solid var(--line);}
+  .tlrow .when{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-faint);padding-top:4px;}
+  .tlrow .node{display:flex;justify-content:center;}
+  .tlrow .node i{width:10px;height:10px;border-radius:50%;border:2px solid var(--orange);background:var(--bg);margin-top:6px;}
+  .tlrow.active .node i{background:var(--orange);box-shadow:0 0 10px var(--orange);}
+  .tlrow h3{font-family:'Tenorite','Poppins',sans-serif;font-weight:700;font-size:22px;margin-bottom:6px;}
+  .tlrow .role{color:var(--orange);font-size:12px;letter-spacing:.08em;margin-bottom:8px;}
+  .tlrow p{color:var(--ink-dim);font-size:14px;line-height:1.6;max-width:60ch;}
+  @media (max-width:700px){ .tlrow{grid-template-columns:20px 1fr;} .tlrow .when{grid-column:1/-1;order:-1;padding-top:0;margin-bottom:6px;} }
+
+  /* ---------- CONTACT ---------- */
+  .contact-top h2{font-size:clamp(30px,5vw,54px);font-weight:800;line-height:1.05;}
+  .contact-top p{color:var(--ink-dim);max-width:52ch;margin-top:18px;font-size:16px;line-height:1.6;}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line);margin-top:56px;}
+  .cinfo{padding:40px 40px 40px 0;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:26px;}
+  .citem .k{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);margin-bottom:4px;}
+  .citem .v{font-size:16px;color:var(--ink);}
+  .citem .v a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink-faint);}
+  .citem .v a:hover{color:var(--orange);border-color:var(--orange);}
+  .cform{padding:40px 0 40px 40px;display:flex;flex-direction:column;gap:16px;}
+  .cform label{font-size:10px;letter-spacing:.12em;color:var(--ink-faint);}
+  .cform input, .cform textarea{
+    background:transparent;border:1px solid var(--line);color:var(--ink);
+    font-family:'Tenorite','Poppins',sans-serif;font-size:14px;padding:12px 14px;width:100%;
+  }
+  .cform textarea{resize:vertical;min-height:110px;}
+  .cform button{
+    margin-top:8px;background:var(--orange);color:#08090b;border:none;
+    font-family:'JetBrains Mono',monospace;font-weight:700;letter-spacing:.1em;font-size:13px;
+    padding:16px 20px;cursor:pointer;transition:background .2s;text-align:left;
+  }
+  .cform button:hover{background:var(--amber);}
+  @media (max-width:800px){ .contact-grid{grid-template-columns:1fr;} .cinfo{border-right:none;border-bottom:1px solid var(--line);padding:40px 0;} .cform{padding:40px 0;} }
+
+  footer{border-top:1px solid var(--line);padding:36px 32px;max-width:1400px;margin:0 auto;}
+  .fgrid{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;}
+  .fname{font-family:'Tenorite','Poppins',sans-serif;font-size:26px;font-weight:800;}
+  .fname .dot2{color:var(--orange);}
+  .frole{font-size:11px;letter-spacing:.1em;color:var(--ink-faint);margin-top:2px;}
+  .flinks{display:flex;gap:22px;flex-wrap:wrap;}
+  .flinks a{color:var(--ink-dim);text-decoration:none;font-size:12px;letter-spacing:.08em;}
+  .flinks a:hover{color:var(--orange);}
+  .fbottom{display:flex;justify-content:space-between;margin-top:26px;padding-top:20px;border-top:1px solid var(--line);font-size:11px;color:var(--ink-faint);flex-wrap:wrap;gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="topline"></div>
+  <div class="navwrap">
+    <div class="sysstat"><span class="dot"></span> SYSTEMS: MOTIVATED</div>
+    <nav>
+      <a href="#hero" class="active">00 LAUNCH CONTROL</a>
+      <a href="#projects">01 PROJECT PADDOCK</a>
+      <a href="#why">02 WHY MOTORSPORT</a>
+      <a href="#timeline">03 KNOWLEDGE INTAKE</a>
+      <a href="#contact">04 CONTACT</a>
+    </nav>
+  </div>
+</header>
+
+<section id="hero" class="hero">
+  <div>
+    <div class="role-tag mono">MOTORSPORT ENGINEER</div>
+    <h1 class="name display">BENCE<br>BÉTÉRI</h1>
+    <p class="bio">Performance and data engineer with hands-on experience in motorsport telemetry, GT data analysis, and performance optimisation — skilled in MoTeC i2, WinTAX, MATLAB, and Python. My work spans combustion-engine testing, GT3 performance analysis, and race strategy simulation. I'm the kind of engineer who keeps digging until the data gives up its answer.</p>
+    <div class="toolmarks mono">
+      <span>MoTeC i2</span><span>WinTAX 4</span><span>MATLAB</span><span>Python</span><span>AVL Cruise M</span><span>AVL VSM</span><span>AVL PUMA</span><span>AVL CONCERTO</span><span>OptimumLap</span><span>BDN Combustion Analyser</span>
+    </div>
+  </div>
+  <div class="hero-art">
+    <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+    <div class="yt-wrap" id="ytWrap"></div>
+    <div class="video-placeholder" id="videoPlaceholder">
+      <div class="play-ring">▶</div>
+      <p class="mono">1-MINUTE INTRO — COMING SOON<br><span>record your intro, upload it to YouTube (unlisted works), then paste the video's 11-character ID into YT_VIDEO_ID at the bottom of this file</span></p>
+    </div>
+    <div class="badge mono bottom">// ENGINEER'S BRIEFING — 60 SEC</div>
+    <div class="badge mono top-r">REC ●</div>
+  </div>
+</section>
+
+<div class="ticker-outer">
+  <div class="ticker mono">
+    <span>CURRENT FOCUS: ECU CALIBRATION &amp; DATA ANALYSIS INTERN @ RADICAL MOTORSPORT HUNGARY &amp; MOTORSPORT ENGINEERING MSC STUDENT</span>
+    <span>PAST PROJECTS //</span>
+    <span>1.8T ENGINE SIM &amp; DYNO CORRELATION</span>
+    <span>INTERLAGOS TCR PRE-EVENT REPORT</span>
+    <span>SPA 6H WEC PRE-EVENT REPORT</span>
+    <span>MBT / MBTL DETERMINATION</span>
+    <span>SUSPENSION BALANCE &amp; LAP SIMULATION</span>
+    <span>FUEL LEVEL SENSOR SELECTION</span>
+    <span>CURRENT FOCUS: ECU CALIBRATION &amp; DATA ANALYSIS INTERN @ RADICAL MOTORSPORT HUNGARY &amp; MOTORSPORT ENGINEERING MSC STUDENT</span>
+    <span>PAST PROJECTS //</span>
+    <span>1.8T ENGINE SIM &amp; DYNO CORRELATION</span>
+    <span>INTERLAGOS TCR PRE-EVENT REPORT</span>
+    <span>SPA 6H WEC PRE-EVENT REPORT</span>
+    <span>MBT / MBTL DETERMINATION</span>
+    <span>SUSPENSION BALANCE &amp; LAP SIMULATION</span>
+    <span>FUEL LEVEL SENSOR SELECTION</span>
+  </div>
+</div>
+
+<section id="projects">
+  <div class="sec-eyebrow mono">01 // PROJECT PADDOCK</div>
+  <h2 class="sec-title display">Technical Dossiers</h2>
+  <p class="sec-intro">Here are some of the recent projects I've worked on. Feel free to open the attached reports — and if you have any questions or feedback, don't hesitate to get in touch.</p>
+  <div class="projgrid">
+
+    <div class="pcard">
+      <div class="ptop"><span>P-01 // AUDI 1.8T 20V</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">Engine sim &amp; dyno correlation</div>
+      <p class="pdesc">Built and validated a 0D simulation model of a tuned Audi 1.8T 20V engine in AVL Cruise M against chassis dyno data, then benchmarked results against the wider tuning ladder to identify which calibration and design variables had the greatest performance impact.</p>
+      <div class="pfoot">
+        <span class="ptools mono">AVL CRUISE M / DYNO DATA</span>
+        <a class="preport mono" href="projects/P01-audi-18t-simulation-correlation.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
+      </div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-02 // TCR ROUND</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">Interlagos pre-event report</div>
+      <p class="pdesc">Built a pre-event report for a virtual TCR round at Interlagos, combining validated lap simulation and teammate telemetry comparison into car setup sensitivity and qualifying/fuel strategy for race weekend.</p>
+      <div class="pfoot">
+        <span class="ptools mono">MOTEC i2 / OPTIMUMLAP</span>
+        <a class="preport mono" href="projects/P02-interlagos-tcr-pre-event-report.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
+      </div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-03 // WEC ROUND</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">Spa 6 Hours pre-event report</div>
+      <p class="pdesc">Self-initiated pre-event report ahead of the 2026 6 Hours of Spa-Francorchamps — track characterisation, Hypercar and LMGT3 competitor benchmarking, and turn-by-turn driver preparation.</p>
+      <div class="pfoot">
+        <span class="ptools mono">RESEARCH / VIDEO ANALYSIS</span>
+        <a class="preport mono" href="projects/P03-spa-6h-wec-pre-event-report.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
+      </div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-04 // COMBUSTION ANALYSIS</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">MBT / MBTL determination</div>
+      <p class="pdesc">Analysed test bench cylinder pressure data with a combustion analyser to determine MBT and knock-limited spark advance across a range of air-fuel ratios, recommending optimal operating points for endurance and drag racing.</p>
+      <div class="pfoot">
+        <span class="ptools mono">BDN COMBUSTION ANALYSER / MATLAB</span>
+        <a class="preport mono" href="projects/P04-mbt-mbtl-determination.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
+      </div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-05 // VEHICLE DYNAMICS</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">Suspension balance &amp; lap sim</div>
+      <p class="pdesc">Tuned suspension parameters in AVL VSM to produce understeer, neutral, and oversteer handling on a standard sports sedan, then compared lap times around Hockenheim Short to quantify the cost of each setup.</p>
+      <div class="pfoot">
+        <span class="ptools mono">AVL VSM</span>
+        <a class="preport mono" href="projects/P05-suspension-balance-lap-simulation.pdf" target="_blank" rel="noopener">READ REPORT ↗</a>
+      </div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-06 // SENSOR SELECTION</span><span class="status done mono">COMPLETE</span></div>
+      <div class="ptitle display">Fuel level sensor selection</div>
+      <p class="pdesc">A fuel level sensing solution selected and justified for a rally car, standing in as the system engineer responsible for delivering reliable fuel data to the powertrain team.</p>
+      <div class="ptools mono">RESEARCH / BENCHMARKING</div>
+    </div>
+
+    <div class="pcard">
+      <div class="ptop"><span>P-07 // GT3 // MSC THESIS</span><span class="status wip mono">IN PROGRESS</span></div>
+      <div class="ptitle display">BMW M4 GT3 BOP checker</div>
+      <p class="pdesc">MATLAB-based Balance of Performance compliance checker processing MoTeC telemetry — currently in development.</p>
+      <div class="ptools mono">MATLAB / MOTEC i2</div>
+    </div>
+
+  </div>
+
+  <div class="thesis">
+    <div class="ptop"><span class="mono">P-08 // RADICAL XXR // MSC THESIS</span><span class="status wip mono">IN PROGRESS</span></div>
+    <h3 class="thesis-title display">Turbocharger mapping &amp; engine model — Radical XXR</h3>
+    <p class="thesis-lead">Manufacturer turbo maps for this engine either don't exist or don't cover the range the car actually runs in — so I'm measuring the turbocharger myself on the university test bench and building the maps into a validated Cruise M model that can support real calibration decisions without burning track time.</p>
+    <div class="flow">
+      <div class="step"><span class="sn mono">01</span><span class="st">Baseline simulation</span><span class="sd">AVL Cruise M model built from known engine geometry</span></div>
+      <div class="step"><span class="sn mono">02</span><span class="st">Turbo test bench</span><span class="sd">Compressor &amp; turbine measured at SZE</span></div>
+      <div class="step"><span class="sn mono">03</span><span class="st">Turbo map generation</span><span class="sd">Flow &amp; efficiency maps built from bench data</span></div>
+      <div class="step"><span class="sn mono">04</span><span class="st">Model refinement</span><span class="sd">Real maps fed back into Cruise M</span></div>
+      <div class="step"><span class="sn mono">05</span><span class="st">Test data correlation</span><span class="sd">Simulation checked against measurement</span></div>
+      <div class="step"><span class="sn mono">06</span><span class="st">ECU calibration</span><span class="sd">Model used to guide calibration work</span></div>
+      <div class="step"><span class="sn mono">07</span><span class="st">Data validation</span><span class="sd">Verified against running engine data</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="sec-eyebrow mono">02 // TELEMETRY VIEW</div>
+  <h2 class="sec-title display">Why I'm the engineer<br>for the job</h2>
+  <div class="whygrid">
+    <div class="wcard">
+      <div class="tag mono"><span>W-01</span><span>MOTIVATION</span></div>
+      <h3 class="display">The pull</h3>
+      <p>Internal combustion is where I want to build my career — the way a spark advance sweep or an AFR change ripples through everything downstream. Telemetry and track data are what make it real: numbers off an actual engine, on an actual track, not just a spreadsheet.</p>
+      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
+    </div>
+    <div class="wcard">
+      <div class="tag mono"><span>W-02</span><span>METHOD</span></div>
+      <h3 class="display">How I work</h3>
+      <p>Every model starts on the test bench. I validate simulation against dyno data, cross-check combustion analysis against cylinder pressure traces, and use telemetry to close the loop between what the engine should do and what it actually does on track.</p>
+      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
+    </div>
+    <div class="wcard">
+      <div class="tag mono"><span>W-03</span><span>OBJECTIVE</span></div>
+      <h3 class="display">What I bring</h3>
+      <p>A background built around engines — test-bench execution, combustion analysis, calibration — paired with the telemetry and data skills to take that knowledge trackside, on a GT3 or endurance programme.</p>
+      <div class="edit-flag mono">✎ REFINE IN YOUR OWN WORDS</div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="sec-eyebrow mono">03 // KNOWLEDGE INTAKE</div>
+  <h2 class="sec-title display">Timeline</h2>
+  <div class="tl">
+    <div class="tlrow active">
+      <div class="when mono">2026 —<br>PRESENT</div>
+      <div class="node"><i></i></div>
+      <div>
+        <h3 class="display">ECU Calibration &amp; Data Analysis Intern</h3>
+        <div class="role mono">RADICAL MOTORSPORT HUNGARY</div>
+        <p>Working on data acquisition and calibration for Radical race cars, alongside the MSc thesis project on turbo mapping for the Radical XXR.</p>
+      </div>
+    </div>
+    <div class="tlrow">
+      <div class="when mono">2024 —<br>2026</div>
+      <div class="node"><i></i></div>
+      <div>
+        <h3 class="display">MSc, Motorsport Engineering</h3>
+        <div class="role mono">SZÉCHENYI ISTVÁN UNIVERSITY, GYŐR</div>
+        <p>Coursework and projects spanning vehicle dynamics, engine simulation, combustion analysis, and race strategy — including the BMW M4 GT3 BOP compliance checker.</p>
+      </div>
+    </div>
+    <div class="tlrow">
+      <div class="when mono">—</div>
+      <div class="node"><i></i></div>
+      <div>
+        <h3 class="display">Verification &amp; Validation Engineer</h3>
+        <div class="role mono">AVL HUNGARY</div>
+        <p>ICE test-bench execution using AVL PUMA and AVL CONCERTO.</p>
+      </div>
+    </div>
+    <div class="tlrow">
+      <div class="when mono">— 2024</div>
+      <div class="node"><i></i></div>
+      <div>
+        <h3 class="display">BSc, Vehicle Engineering</h3>
+        <div class="role mono">SZÉCHENYI ISTVÁN UNIVERSITY, GYŐR</div>
+        <p>Foundation in vehicle systems ahead of specialising in motorsport engineering.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="contact-top">
+    <div class="sec-eyebrow mono">04 // CONTACT</div>
+    <h2 class="display">Ready for<br>green flag</h2>
+    <p>Open to full-time roles and internships in motorsport data, calibration, and simulation — GT3 and endurance programmes especially. Let's talk.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="cinfo">
+      <div class="citem">
+        <div class="k mono">EMAIL</div>
+        <div class="v"><a href="mailto:your.email@example.com">your.email@example.com</a></div>
+      </div>
+      <div class="citem">
+        <div class="k mono">BASED</div>
+        <div class="v">Győr, Hungary // open to relocation</div>
+      </div>
+      <div class="citem">
+        <div class="k mono">STATUS</div>
+        <div class="v" style="color:var(--amber)">● Open to opportunities</div>
+      </div>
+    </div>
+    <form class="cform">
+      <div>
+        <label class="mono">NAME</label>
+        <input type="text" placeholder="Team Principal">
+      </div>
+      <div>
+        <label class="mono">EMAIL</label>
+        <input type="email" placeholder="team@motorsport.com">
+      </div>
+      <div>
+        <label class="mono">MESSAGE</label>
+        <textarea placeholder="Describe the role or project..."></textarea>
+      </div>
+      <button type="submit" class="mono">TRANSMIT MESSAGE →</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="fgrid">
+    <div>
+      <div class="fname display">BENCE BÉTÉRI<span class="dot2">.</span></div>
+      <div class="frole mono">MOTORSPORT ENGINEER // M.ENG</div>
+    </div>
+    <div class="flinks mono">
+      <a href="#hero">LAUNCH</a>
+      <a href="#projects">PROJECTS</a>
+      <a href="#why">MOTIVATION</a>
+      <a href="#timeline">TIMELINE</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </div>
+  <div class="fbottom mono">
+    <span>© 2026 BENCE BÉTÉRI // ALL RIGHTS RESERVED</span>
+    <span>BUILT WITH CLAUDE</span>
+  </div>
+</footer>
+
+<script>
+  // ⬇⬇ PASTE YOUR YOUTUBE VIDEO ID HERE (the 11 characters after "watch?v=" in the URL) ⬇⬇
+  const YT_VIDEO_ID = "PASTE_ID_HERE";
+  if (/^[A-Za-z0-9_-]{11}$/.test(YT_VIDEO_ID)) {
+    document.getElementById('ytWrap').innerHTML =
+      '<iframe src="https://www.youtube-nocookie.com/embed/' + YT_VIDEO_ID + '?rel=0&modestbranding=1" ' +
+      'title="Bence Bétéri — 60 second introduction" loading="lazy" ' +
+      'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+  } else {
+    document.getElementById('videoPlaceholder').style.display = 'flex';
+  }
+
+  const links = document.querySelectorAll('nav a');
+  const sections = document.querySelectorAll('section[id]');
+  window.addEventListener('scroll', () => {
+    let current = sections[0].id;
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+    });
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#'+current));
+  });
+</script>
+
+</body>
+</html>
